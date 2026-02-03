@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dashboard {
+            background: #ffffff;
+            padding: 30px 40px;
+            width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .dashboard h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        .dashboard p {
+            font-size: 18px;
+            color: #555;
+            margin: 12px 0;
+        }
+
+        .dashboard span {
+            font-weight: bold;
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <h1>DASHBOARD</h1>
+        <p>Name : <span>{{name}}</span></p>
+        <p>Age : <span>{{age}}</span></p>
+        <p>City : <span>{{city}}</span></p>
+    </div>
+
+</body>
+</html>
