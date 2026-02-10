@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'student',
+    'student', 
+    'employee', 
     
 ]
 
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'learning26.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE':'django.db.backends.postgresql',
-       'NAME':'learning26',
+       'NAME':'learning26_new',
        'USER':'postgres',
        'PASSWORD':'User@1234',
        'HOST':'localhost',
