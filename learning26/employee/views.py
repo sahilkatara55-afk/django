@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
+from .models import Employee
+from .forms import EmployeeForm,CourseForm,feedbackForm,complaintForm
 
 # from django.shortcuts import render
 from .models import Employee
+# from .forms import EmployeeForm
 
 # Create your views here.
 def employeeList(request):
@@ -73,4 +76,55 @@ def employeeFilter(request):
     print("query 15",employee15) 
     print("query 16",employee16) 
     print("query 17",employee17) 
+    print("query 18",employee18)
     return render(request, 'employee/employeeFilter.html')
+
+
+def createEmployee(request):
+    Employee.objects.create(name="ajay",age="23",salary="23000",post="hr",join_date="2024-01-01")
+
+    return HttpResponse("Employee created")
+ 
+def createEmployeewithforom(request):
+    print(request.method)
+    if request.method =="POST":
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            form.save() #it same as create
+            return HttpResponse("Employee created")
+    else:
+            #from object create ----> html
+            form = EmployeeForm()
+    return render(request,"employee/createEmployeeForm.html",{"form":form})
+
+def createCourse(request):
+    if request.method == "POST":
+        form = CourseForm(request.POST) #csrftoken,form alll fileds data
+        form.save() #create.. insert into table 
+        return HttpResponse("COURSE CREATED...")
+    else:
+        form = CourseForm()
+        return render(request,"employee/createCourse.html",{"form":form})  
+
+# Feedback (ModelForm)   
+def feedback_page(request):
+    if request.method == "POST":
+        form = feedbackForm(request.POST)
+        # if form.is_valid():
+        form.save()
+        return HttpResponse("Feedback submitted successfully!")
+    else:
+        form = feedbackForm()
+        return render(request, "employee/feedback.html", {"form": form})    
+def complaint_page(request):
+    if request.method == "POST":
+        form = complaintForm(request.POST)
+        if form.is_valid():
+            # Process the form data (e.g., save to database, send email, etc.)
+            user_name = form.cleaned_data['user_name']
+            problem = form.cleaned_data['problem']
+            # Here you can save the complaint to the database or perform other actions
+            return HttpResponse("Complaint submitted successfully!")
+    else:
+        form = complaintForm()
+    return render(request, "employee/complaint.html", {"form": form})    
