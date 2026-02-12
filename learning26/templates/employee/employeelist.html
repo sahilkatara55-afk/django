@@ -1,16 +1,37 @@
 <h1>EMPLOYEE LIST</h1>
+<a href="{% url 'createEmployeeWithForm' %}">CREATE EMPLOYEE WITH FORM</a>
+<a href="{% url 'filterEmployee' %}">FILTER</a>
 
+<b>Sort By:</b>
 
-{% for emp in employees  %}
+<!-- Name -->
+<a href="?sort=name&order=asc">Name ⬆</a> |
+<a href="?sort=name&order=desc">Name ⬇</a>
+
+&nbsp;&nbsp;
+
+<!-- Salary -->
+<a href="?sort=salary&order=asc">Salary ⬆</a> |
+<a href="?sort=salary&order=desc">Salary ⬇</a>
+
+&nbsp;&nbsp;
+
+<!-- Join Date -->
+<a href="?sort=join_date&order=asc">Date ⬆</a> |
+<a href="?sort=join_date&order=desc">Date ⬇</a>
+
+<br> </br>
+
+<!-- {% for emp in employees  %}
     {{emp.id}}
     {{emp.name}}
     {{emp.age}}
     {{emp.salary}}
     {{emp.join_date}}
     {{emp.post}}
-{% endfor %}
+{% endfor %} -->
 
-<table>
+<table border="1" cellpadding="10" cellspacing="0"> 
     <thead>
         <tr>
             <th>ID</th>
@@ -19,6 +40,7 @@
             <th>Salary</th>
             <th>Join Date</th>
             <th>Post</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -30,6 +52,12 @@
             <td>{{emp.salary}}</td>
             <td>{{emp.join_date}}</td>
             <td>{{emp.post}}</td>
+            <td>
+    
+                <!-- <a href="{% url 'deleteEmployee' emp.id %}">delete</a> -->
+                <a href="{% url 'deleteEmployee' emp.id %}">delete</a>
+        
+            </td>
         </tr>
         {% endfor %}
     </tbody>

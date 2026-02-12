@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from .models import Employee
 from .forms import EmployeeForm,CourseForm,feedbackForm,complaintForm
 
@@ -91,7 +91,8 @@ def createEmployeewithforom(request):
         form = EmployeeForm(request.POST)
         if form.is_valid():
             form.save() #it same as create
-            return HttpResponse("Employee created")
+            #return HttpResponse("Employee created")
+            return redirect("employeeList") #url name from urls.py
     else:
             #from object create ----> html
             form = EmployeeForm()
@@ -128,3 +129,33 @@ def complaint_page(request):
     else:
         form = complaintForm()
     return render(request, "employee/complaint.html", {"form": form})    
+def deleteEmployee(request,id):
+    #delete from employee whhere id = 1
+    print ("id from url",id)
+    Employee.objects.filter(id=id).delete()
+    print("delete employee")
+    #return HttpResponse("delete employee")
+    return redirect("employeeList") #url name from urls.py
+
+def filterEmployee(request):
+    print("filter employee called...")
+    employees = Employee.objects.filter(age__gte=23).values()
+    print("filter Employees =",employees)
+    # return redirect ("employeeList")
+    return render(request,"employee/employeelist.html",{"employees":employees})
+
+def employeeList(request):
+
+    sort_by = request.GET.get('sort')   # field name
+    order = request.GET.get('order')    # asc / desc
+    employees = Employee.objects.all()
+    if sort_by and order:
+        if order == 'asc':
+            employees = employees.order_by(sort_by)
+        elif order == 'desc':
+            employees = employees.order_by('-' + sort_by)
+    context = {
+        'employees': employees
+    }
+    return render(request, 'employee/employeeList.html', context)
+    
