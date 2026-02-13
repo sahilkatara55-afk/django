@@ -9,7 +9,7 @@ from .models import Employee
 # Create your views here.
 def employeeList(request):
     #employees = Employee.objects.all() #select * from employee
-    employees = Employee.objects.all().values()
+    employees = Employee.objects.all().order_by("id").values()
     #employees = Employee.objects.all().values_list()
     print(employees)
     return render(request, 'employee/employeeList.html',{"employees":employees})#Create your views here.
@@ -85,7 +85,7 @@ def createEmployee(request):
 
     return HttpResponse("Employee created")
  
-def createEmployeewithforom(request):
+def createEmployeewithform(request):
     print(request.method)
     if request.method =="POST":
         form = EmployeeForm(request.POST)
@@ -158,4 +158,16 @@ def employeeList(request):
         'employees': employees
     }
     return render(request, 'employee/employeeList.html', context)
+
+#update --->
+def updateEmployee(request,id):
+    #database existing user... id -->
+    employee = Employee.objects.get(id=id) #select * from employee where id = 1
     
+    if request.method == "POST":
+        form = EmployeeForm(request.POST,instance=employee)
+        form.save()
+        return redirect("employeeList")
+    else:
+        form = EmployeeForm(instance=employee)    
+        return render(request,"employee/updateEmployee.html",{"form":form})
