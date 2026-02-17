@@ -146,18 +146,16 @@ def filterEmployee(request):
 
 def employeeList(request):
 
-    sort_by = request.GET.get('sort')   # field name
-    order = request.GET.get('order')    # asc / desc
+    sort = request.GET.get('sort')
+
     employees = Employee.objects.all()
-    if sort_by and order:
-        if order == 'asc':
-            employees = employees.order_by(sort_by)
-        elif order == 'desc':
-            employees = employees.order_by('-' + sort_by)
-    context = {
+
+    if sort:
+        employees = employees.order_by(sort)
+
+    return render(request, 'employee/employeeList.html', {
         'employees': employees
-    }
-    return render(request, 'employee/employeeList.html', context)
+    })
 
 #update --->
 def updateEmployee(request,id):

@@ -1,43 +1,49 @@
-<h1>EMPLOYEE LIST</h1>
-<a href="{% url 'createEmployeeWithForm' %}">CREATE EMPLOYEE WITH FORM</a>
-<a href="{% url 'filterEmployee' %}">FILTER</a>
+{% extends 'base.html' %}
 
-<b>Sort By:</b>
+{% block content %}
+<h2>Employee List</h2>
 
-<!-- Name -->
-<a href="?sort=name&order=asc">Name ⬆</a> |
-<a href="?sort=name&order=desc">Name ⬇</a>
+<!-- Top Bar -->
+<div class="top-bar">
+    <div class="top-actions">
 
-&nbsp;&nbsp;
+        <!-- Add Member -->
+        <a href="{% url 'createEmployeeWithForm' %}" class="btn btn-add">
+            + Add Member
+        </a>
 
-<!-- Salary -->
-<a href="?sort=salary&order=asc">Salary ⬆</a> |
-<a href="?sort=salary&order=desc">Salary ⬇</a>
+        <!-- Filter -->
+        <a href="{% url 'filterEmployee' %}" class="btn btn-filter">
+            Filter
+        </a>
 
-&nbsp;&nbsp;
+        <!-- Sort -->
+        <div class="sort-box">
 
-<!-- Salary -->
-<a href="?sort=id&order=asc">ID ⬆</a> |
-<a href="?sort=id&order=desc">ID ⬇</a>
+            <span>Sort:</span>
 
-&nbsp;&nbsp;
+            <a href="?sort=name">Name ↑</a>
+            <a href="?sort=-name">Name ↓</a>
 
-<!-- Join Date -->
-<a href="?sort=join_date&order=asc">Date ⬆</a> |
-<a href="?sort=join_date&order=desc">Date ⬇</a>
+            <a href="?sort=salary">Salary ↑</a>
+            <a href="?sort=-salary">Salary ↓</a>
 
-<br> </br>
+            <a href="?sort=id">ID ↑</a>
+            <a href="?sort=-id">ID ↓</a>
 
-<!-- {% for emp in employees  %}
-    {{emp.id}}
-    {{emp.name}}
-    {{emp.age}}
-    {{emp.salary}}
-    {{emp.join_date}}
-    {{emp.post}}
-{% endfor %} -->
+            <a href="?sort=date">Date ↑</a>
+            <a href="?sort=-date">Date ↓</a>
 
-<table borders="1" cellpadding="10" cellspacing="0"> 
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Table -->
+<div class="table-container">
+
+<table>
     <thead>
         <tr>
             <th>ID</th>
@@ -49,22 +55,41 @@
             <th>Action</th>
         </tr>
     </thead>
+
     <tbody>
-        {% for emp in employees  %}
+
+        {% for emp in employees %}
+
         <tr>
-            <td>{{emp.id}}</td>
-            <td>{{emp.name}}</td>
-            <td>{{emp.age}}</td>
-            <td>{{emp.salary}}</td>
-            <td>{{emp.join_date}}</td>
-            <td>{{emp.post}}</td>
+            <td>{{ emp.id }}</td>
+            <td>{{ emp.name }}</td>
+            <td>{{ emp.age }}</td>
+            <td>{{ emp.salary }}</td>
+            <td>{{ emp.join_date }}</td>
+            <td>{{ emp.post }}</td>
+
             <td>
-    
-                <!-- <a href="{% url 'deleteEmployee' emp.id %}">delete</a> -->
-                <a href="{% url 'deleteEmployee' emp.id %}">delete</a>
-                <a href="{% url 'updateEmployee' emp.id %}">update</a>
+
+                <a href="{% url 'deleteEmployee' emp.id %}" 
+                   class="btn btn-delete"
+                   onclick="return confirm('Are you sure delete?')">
+                   Delete
+                </a>
+
+                <a href="{% url 'updateEmployee' emp.id %}" 
+                   class="btn btn-update">
+                   Update
+                </a>
+
             </td>
         </tr>
+
         {% endfor %}
+
     </tbody>
+
 </table>
+
+</div>
+
+{% endblock content %}
