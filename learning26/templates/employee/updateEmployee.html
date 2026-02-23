@@ -1,6 +1,29 @@
-<form method ="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit" value="update">
-    
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="form-container update-box">
+
+    <h2>Update Employee</h2>
+
+    <a href="{% url 'employeeList' %}" class="list-link">
+        ← Back to Employee List
+    </a>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-box">
+            {{ form.as_p }}
+        </div>
+
+        <button type="submit" class="btn-update">
+            Update
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock content %}

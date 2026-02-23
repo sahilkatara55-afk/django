@@ -144,18 +144,35 @@ def filterEmployee(request):
     # return redirect ("employeeList")
     return render(request,"employee/employeelist.html",{"employees":employees})
 
+from django.db.models import Q
+
+from django.db.models import Q
+
 def employeeList(request):
 
+    search = request.GET.get('search', '')
     sort = request.GET.get('sort')
 
     employees = Employee.objects.all()
 
+    # 🔍 Search
+    if search:
+        employees = employees.filter(
+            Q(name__icontains=search) |
+            Q(age__icontains=search) |
+            Q(post__icontains=search)
+        )
+
+    # 📊 Sort
     if sort:
         employees = employees.order_by(sort)
 
-    return render(request, 'employee/employeeList.html', {
-        'employees': employees
-    })
+    context = {
+        'employees': employees,
+        'search': search
+    }
+
+    return render(request, 'employee/employeeList.html', context)
 
 #update --->
 def updateEmployee(request,id):

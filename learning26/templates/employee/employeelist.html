@@ -3,21 +3,26 @@
 {% block content %}
 <h2>Employee List</h2>
 
-<!-- Top Bar -->
-<div class="top-bar">
-    <div class="top-actions">
+<!-- Top Section -->
+<div class="top-wrapper">
 
-        <!-- Add Member -->
+    <!-- Pink Box : Add -->
+    <div class="box pink-box">
+
         <a href="{% url 'createEmployeeWithForm' %}" class="btn btn-add">
             + Add Member
         </a>
 
-        <!-- Filter -->
+    </div>
+
+
+    <!-- Green Box : Sort + Filter -->
+    <div class="box green-box">
+
         <a href="{% url 'filterEmployee' %}" class="btn btn-filter">
             Filter
         </a>
 
-        <!-- Sort -->
         <div class="sort-box">
 
             <span>Sort:</span>
@@ -31,14 +36,36 @@
             <a href="?sort=id">ID ↑</a>
             <a href="?sort=-id">ID ↓</a>
 
-            <a href="?sort=date">Date ↑</a>
-            <a href="?sort=-date">Date ↓</a>
-
+            <a href="?sort=join_date">Date ↑</a>
+            <a href="?sort=-join_date">Date ↓</a>
+            
         </div>
 
     </div>
 
+
+    <!-- Red Box : Search -->
+    <div class="box red-box">
+
+        <form method="get" class="search-form">
+
+            <input type="text"
+                   name="search"
+                   placeholder="Search Name / Age / Post"
+                   value="{{ search }}">
+                   
+            {% if request.GET.sort %}
+            <input type="hidden" name="sort" value="{{ request.GET.sort }}">
+            {% endif %}
+
+            <button type="submit">🔍</button>
+
+        </form>
+
+    </div>
+
 </div>
+
 
 <!-- Table -->
 <div class="table-container">
@@ -83,7 +110,10 @@
 
             </td>
         </tr>
-
+{% empty %}
+        <tr>
+            <td colspan="7">No Employees Found</td>
+        </tr>
         {% endfor %}
 
     </tbody>
